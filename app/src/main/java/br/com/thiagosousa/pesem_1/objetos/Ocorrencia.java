@@ -1,4 +1,4 @@
-package objetos;
+package br.com.thiagosousa.pesem_1.objetos;
 
 public class Ocorrencia {
 

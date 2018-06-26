@@ -11,9 +11,10 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
-import objetos.Ocorrencia;
+import br.com.thiagosousa.pesem_1.objetos.Ocorrencia;
+import br.com.thiagosousa.pesem_1.useful.UtilActivity;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends UtilActivity implements View.OnClickListener {
     private static final String SCREENTAG = "evento da MainActivity";
 
     //views
@@ -26,9 +27,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     //variaveis para os calculos
     int tam = 167, comprimento = 168, alternador = 1;
-    int virtual[] = new int[tam];
-    int presencial[] = new int[tam];
+    int virtual[] = new int[tam], contVirtual = 0;
+    int presencial[] = new int[tam], contPresencial = 0;
     int diferenca[] = new int[tam];
+    int soma = 0;
     double media, somatorio = 0, variancia, somaVar;
     Ocorrencia ocorrencia;
 
@@ -75,12 +77,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     if (alternador == 0) {
                         ocorrencia = new Ocorrencia(Integer.valueOf(dado));
-                        ocorrencia.setDescricao("Virtual");
+                        ocorrencia.setDescricao("Presencial");
+
+                        //Armazena o valor recebido no vetor de presencial
+                        presencial[contPresencial] = Integer.valueOf(dado);
+
                         alternador = 1;
+                        contPresencial++;
                     } else {
                         ocorrencia = new Ocorrencia(Integer.valueOf(dado));
-                        ocorrencia.setDescricao("Presencial");
+                        ocorrencia.setDescricao("Virtual");
+
+                        //Armazena o valor recebido no vetor de virtual
+                        virtual[contVirtual] = Integer.valueOf(dado);
+
                         alternador = 0;
+                        contVirtual++;
                     }
 
                     ocorrenciasList.add(ocorrencia);
@@ -94,6 +106,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.botao_calcular:
 
+                //Faz as diferenças entre o virtual e o presencial e armazena cada uma no vetor
+                for(int i = 0; i < tam; i++) {
+                 diferenca[i] = virtual[i] - presencial[i];
+                }
+
+                //Efetua a soma das diferenças acumuladas anteriormente no vetor de diferenças
+                for(int i = 0; i < tam; i++) {
+                    soma += diferenca[i];
+                }
+
+                //Configurando a media
+                media = (double) soma/comprimento;
+
+                //Calculando a variancia amostral
+                for(int i = 0; i < tam; i++) {
+                    somaVar += Math.pow((diferenca[i] - media), 2);
+                }
+
+                //Configurando a variancia
+                somaVar = somaVar/tam;
+
+                String calculos = "media dos valores: " + media
+                        + "\nVariância amostral: " + somaVar;
+
+                mostrarMsg(calculos);
 
                 break;
         }
