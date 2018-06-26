@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">PE/Sem-1</string>
+    <string name="app_name">PE/Work</string>
+    <string name="texto_bt_principal">Add</string>
+    <string name="texto_bt_calcular">Calc</string>
 </resources>
