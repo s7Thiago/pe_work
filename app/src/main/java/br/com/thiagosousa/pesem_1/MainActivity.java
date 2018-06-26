@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     adapter.notifyDataSetChanged();
 
                 } else {
-                    entradaPrincipal.setError("Este campo não apresenta o resultado esperado\n Por favor, inssira um valor numérico");
+                    entradaPrincipal.setError("Este campo não apresenta o resultado esperado\n\n Por favor, insira um valor numérico");
                 }
 
                 break;
